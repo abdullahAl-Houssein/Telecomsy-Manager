@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "vite preview --port 5173 --host"
+    "start": "npx vite preview --port 5173 --host"
   },
   "dependencies": {
     "better-sqlite3": "^12.6.2",

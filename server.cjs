@@ -8,7 +8,7 @@ const Database = require("better-sqlite3");
 const path     = require("path");
 
 const app  = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const DB_PATH = path.join(__dirname, "telecomsy.db");
 
 app.use(cors({ origin: "*", credentials: false }));
@@ -563,6 +563,27 @@ app.get("/api/health", (_,res) => {
     counts[t]=db.prepare("SELECT COUNT(*) as n FROM "+t).get().n;
   res.json({ok:true, version:"5.0.0", counts});
 });
+
+// ── Serve frontend (production) ─────────────────────────────────────────────
+const fs   = require("fs");
+// Try multiple possible dist locations
+const distPath = [
+  path.join(__dirname, "dist"),
+  path.join(process.cwd(), "dist"),
+  "/app/dist"
+].find(p => fs.existsSync(p));
+
+if (distPath) {
+  app.use(express.static(distPath));
+  app.get("*", (req, res) => {
+    if (req.path.startsWith("/api")) return res.status(404).json({error:"Not found"});
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+  console.log("Serving frontend from: " + distPath);
+} else {
+  console.warn("WARNING: dist folder not found! Run npm run build first.");
+  app.get("/", (req, res) => res.send("TELECOMSY API running. Frontend not built."));
+}
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 createTables();

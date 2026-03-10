@@ -589,8 +589,8 @@ if (distPath) {
 createTables();
 seedIfFirstRun();
 ensureSuperuser();
-app.listen(PORT, () => {
-  console.log(`\nTELECOMSY API v5.0 → http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`\nTELECOMSY API v5.0 → http://0.0.0.0:${PORT}`);
   console.log(`DB: ${DB_PATH}`);
   console.log(`Superadmin: ${SUPERUSER.username} / ${SUPERUSER.password}`);
   console.log(`Notifications: persistent DB + SSE push\n`);

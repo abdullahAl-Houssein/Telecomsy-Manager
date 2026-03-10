@@ -2,9 +2,7 @@
 nixPkgs = ["nodejs_22", "python311", "gcc", "gnumake", "pkg-config"]
 
 [phases.install]
-cmds = [
-  "npm install --build-from-source"
-]
+cmds = ["npm install --build-from-source"]
 
 [phases.build]
 cmds = ["npm run build"]

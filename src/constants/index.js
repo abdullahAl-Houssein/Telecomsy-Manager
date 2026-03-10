@@ -4,7 +4,7 @@
 
 export const APP_VERSION = "6.0.0";
 export const LOGO_IMG    = "/logo.png";
-export const API_BASE    = "http://localhost:3001";
+export const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 // ── Default data ──────────────────────────────────────────────────────────────
 export const DEFAULT_TIERS = [
